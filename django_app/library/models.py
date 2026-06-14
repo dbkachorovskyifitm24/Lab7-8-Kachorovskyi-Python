@@ -1,7 +1,10 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Назва")
+    description = models.TextField(blank=True, verbose_name="Опис")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата створення")
 
     class Meta:
         ordering = ['name']
@@ -11,8 +14,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Author(models.Model):
     name = models.CharField(max_length=150, verbose_name="ПІБ")
+    email = models.EmailField(blank=True, verbose_name="Email")
+    bio = models.TextField(blank=True, verbose_name="Біографія")
 
     class Meta:
         ordering = ['name']
@@ -21,6 +27,7 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Book(models.Model):
     title = models.CharField(max_length=200, verbose_name="Назва")
@@ -35,6 +42,7 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class BookInventory(models.Model):
     book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='inventory')
